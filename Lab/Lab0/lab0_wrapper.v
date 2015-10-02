@@ -80,6 +80,32 @@ module mux2 #( parameter W = 1 )
     assign out = (sel) ? in1 : in0;
 endmodule
 
+module FullAdder4bit(sum, carryout, overflow, a, b);
+  output[3:0] sum;  // 2?s complement sum of a and b
+  output carryout;  // Carry out of the summation of a and b
+  output overflow;  // True if the calculation resulted in an overflow
+  input[3:0] a;     // First operand in 2?s complement format
+  input[3:0] b;     // Second operand in 2?s complement format
+  wire[2:0] carry;
+  fullAdder adder0(sum[0], carry[0], a[0], b[0], 1'b0);
+  fullAdder adder1(sum[1], carry[1], a[1], b[1], carry[0]);
+  fullAdder adder2(sum[2], carry[2], a[2], b[2], carry[1]);
+  fullAdder adder3(sum[3], carryout, a[3], b[3], carry[2]);
+  or orgate(overflow, carryout, carry[2]);
+
+endmodule
+
+module fullAdder(sum, carryout, a, b, carryin);
+output sum, carryout;
+input a, b, carryin;
+wire AxorB, AandB, AxorBandC;
+
+xor xorgate0(AxorB,a,b);
+xor xorgate1(sum,AxorB, carryin);
+and andgate0(AxorBandC,AxorB,carryin);
+and andgate1(AandB, a, b);
+or orgate(carryout, AandB, AxorBandC);
+endmodule
 
 //--------------------------------------------------------------------------------
 // Main Lab 0 wrapper module
