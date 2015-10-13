@@ -1,0 +1,7 @@
+*.bak
+*.PNG
+*.vstf
+*.wlf
+work/*
+work
+
