@@ -1,0 +1,7 @@
+Work Plan
+
+Phase 1: Sit down and write most of code (5 hours)
+
+Phase 2: Smoke some cigarettes	(30 Minutes)
+
+Phase 3: Write the report and testbench (3 hours)
